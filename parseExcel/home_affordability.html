@@ -44,7 +44,7 @@
 		row = home_for_sale_stats[index];
 		width = parseFloat(row[3] * 100);
 
-		html += "<div style='overflow: hidden; text-align: center; box-sizing: border-box; padding: 5px; border-right: 2px solid black; display: inline-block; width: " + width + "%;'>$" + row[0] + " - <br />" + row[1] + "</div>";
+		html += "<div style='overflow: hidden; text-align: center; box-sizing: border-box; padding: 5px; border-right: 2px solid black; display: inline-block; width: " + width + "%;'>$" + row[0] + " - <br />" + row[1] + "<br />("+parseFloat(row[3]*100).toFixed(0)+"%)</div>";
 	}
 	html += "</div></div>";
 
@@ -57,8 +57,8 @@
 
 		html += "<div><div style='border-bottom: 1px solid black; width: 10%; display: inline-block; float: left; height: " + height + "%;'>$" + row[0] + " - <br />" + row[1] + "<br />(" + parseFloat(row[3] * 100).toFixed(0) + "%)</div>";
 
-		html += "<div style='width: 90%; height: " + height + "%; background: red; display: inline-block;'>";
-			html += "<div style='width: " + width + "%; background: green; height: 100%; color: white;'>" + width + "%</div>";
+		html += "<div style='width: 90%; height: " + height + "%; background: #e96656; display: inline-block;'>";
+			html += "<div style='width: " + width + "%; background: #069059; height: 100%; color: white;'>" + width + "%</div>";
 		html += "</div></div>";
 
 	}
