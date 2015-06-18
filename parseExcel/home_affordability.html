@@ -48,7 +48,7 @@
 	}
 	html += "</div></div>";
 
-	for(index in total_household_income_stats){
+	for(index in total_household_income_stats.reverse() ){
 		row = total_household_income_stats[index];
 		height = parseFloat(row[3]);
 		height *= 100;
