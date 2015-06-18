@@ -1,0 +1,72 @@
+
+<html>
+<head>
+	<style type='text/css'>
+		body{
+			text-align: center;
+
+		}
+
+		h1{
+			margin-top: 30px;
+		}
+		#container{
+			width: 90%;
+			height: 75%;
+			margin: 50px auto;
+		}
+
+		#header{
+			text-align: left;
+		}
+
+		div{
+			box-sizing: border-box;
+		}
+	</style>
+</head>
+<body>
+<h1>Home Affordability Graph</h1>
+<div id='container'>
+
+</div>
+
+<script type='text/javascript' src='http://code.jquery.com/jquery-1.11.3.min.js'></script>
+
+
+<script type='text/javascript' src='home_affordability.js'></script>
+<script type='text/javascript'>
+
+	// Header Row
+	html = "";
+	html += "<div id='header'><div style='width: 10%; display: inline-block; font-weight: bold; font-size: 0.8em;'>Home Price (X)<br />Household Income(Y)</div><div style='width: 90%; display: inline-block;'>";
+	for(index in home_for_sale_stats){
+		row = home_for_sale_stats[index];
+		width = parseFloat(row[3] * 100);
+
+		html += "<div style='overflow: hidden; text-align: center; box-sizing: border-box; padding: 5px; border-right: 2px solid black; display: inline-block; width: " + width + "%;'>$" + row[0] + " - <br />" + row[1] + "</div>";
+	}
+	html += "</div></div>";
+
+	for(index in total_household_income_stats){
+		row = total_household_income_stats[index];
+		height = parseFloat(row[3]);
+		height *= 100;
+
+		width = parseFloat(row[4]);
+
+		html += "<div><div style='border-bottom: 1px solid black; width: 10%; display: inline-block; float: left; height: " + height + "%;'>$" + row[0] + " - <br />" + row[1] + "<br />(" + parseFloat(row[3] * 100).toFixed(0) + "%)</div>";
+
+		html += "<div style='width: 90%; height: " + height + "%; background: red; display: inline-block;'>";
+			html += "<div style='width: " + width + "%; background: green; height: 100%; color: white;'>" + width + "%</div>";
+		html += "</div></div>";
+
+	}
+
+	if(html){
+		$("#container").append(html);
+	}
+
+</script>
+</body>
+</html>
