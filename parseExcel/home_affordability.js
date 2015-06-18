@@ -32,7 +32,7 @@ function get_income_group_affordable_width(income){
 	for(index in home_for_sale_stats){
 		row = home_for_sale_stats[index];
 
-		console.log("testing: " + max_affordable + " : " + row[1]);
+		console.log("testing: " + max_affordable + " : " + row[1]); 
 		if(max_affordable > row[1]){
 			console.log("hit full");
 			width += parseFloat(row[3]);
