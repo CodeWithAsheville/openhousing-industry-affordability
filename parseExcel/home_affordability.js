@@ -11,6 +11,14 @@ var home_for_sale_stats =
 					];
 
 
+for(index in home_for_sale_stats){
+	if(index % 2 == 1){
+		home_for_sale_stats[index][0] = home_for_sale_stats[index-1][0];
+		home_for_sale_stats[index][2] += home_for_sale_stats[index-1][2];
+		delete home_for_sale_stats[index-1];
+	}
+}
+
 var total_household_income_stats = [
 	[0, 15000, 7403],
 	[15000, 24999, 4887],
@@ -22,6 +30,13 @@ var total_household_income_stats = [
 	[1500000, 1000000, 2120]
 ]
 
+for(index in total_household_income_stats){
+	if(index % 2 == 1){
+		total_household_income_stats[index][0] = total_household_income_stats[index-1][0];
+		total_household_income_stats[index][2] += total_household_income_stats[index-1][2];
+		delete total_household_income_stats[index-1];
+	}
+}
 
 var affordable_home_income_multiplier = 3;
 function get_income_group_affordable_width(income){
@@ -33,23 +48,26 @@ function get_income_group_affordable_width(income){
 		row = home_for_sale_stats[index];
 
 		console.log("testing: " + max_affordable + " : " + row[1]); 
+		console.log("testing: " + max_affordable + " : " + row[0]); 
 		if(max_affordable > row[1]){
 			console.log("hit full");
 			width += parseFloat(row[3]);
 			// console.log(width);
 		}
 		else if(max_affordable > row[0]){
+			console.log("partial");
 			section_range = row[1] - row[0];
 			adjusted_max_in_range = max_affordable - row[0];
 
 			section_percentage = adjusted_max_in_range / section_range;
-			// console.log(section_percentage);
-			width += parseFloat(row[3] * section_percentage);
+			console.log(section_percentage, row[3]);
+			width += parseFloat(row[3]) * section_percentage;
+			console.log(width);
 		}
 	}
 	width *= 100;
 	width = parseFloat(width.toFixed(2));
-	// console.log(width);
+	console.log("Width", width);
 	return width;
 }
 
@@ -64,7 +82,9 @@ console.log(home_for_sale_stats);
 
 for(row in total_household_income_stats){
 	total_household_income_stats[row][3] = parseFloat(total_household_income_stats[row][2] / total_household_incomes).toFixed(2);
-	total_household_income_stats[row][4] = get_income_group_affordable_width(total_household_income_stats[row][0]);
+	
+	// We're looking at the midpoint of the income range here - not sure what's best? 
+	total_household_income_stats[row][4] = get_income_group_affordable_width((total_household_income_stats[row][0] + total_household_income_stats[row][1]) / 2);
 
 
 }
