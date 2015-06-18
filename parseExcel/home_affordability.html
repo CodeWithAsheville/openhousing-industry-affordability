@@ -2,18 +2,43 @@
 <html>
 <head>
 	<style type='text/css'>
-		body{
-			text-align: center;
+			html { 
 
+
+
+		  background: url(http://dev-open-housing-asheville.pantheon.io/wp-content/uploads/2015/05/Asheville_Downtown_panorama1.jpg) no-repeat center center fixed; 
+		  -webkit-background-size: cover;
+		  -moz-background-size: cover;
+		  -o-background-size: cover;
+		  background-size: cover;
+		}
+
+		body{
+			padding-top: 50px;
+			text-align: center;
+		}
+
+
+
+		h1, p, div, span, b{
+			font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+		    font-weight: 300;
+		}
+
+		b{
+			font-weight: bold;
 		}
 
 		h1{
 			margin-top: 30px;
+			font-size: 3.2em;
+
 		}
 		#container{
 			width: 90%;
-			height: 75%;
-			margin: 50px auto;
+/*			height: 75%;
+*/			margin: 50px auto;
+			background: rgba(255,255,255,0.8);
 		}
 
 		#header{
@@ -23,14 +48,42 @@
 		div{
 			box-sizing: border-box;
 		}
+
+		.green-bar{
+			border: 2px solid #333;
+			border-top: none;
+			position: relative;
+		}
+
+		.green-bar span{
+			position: absolute;
+			top: 45%;
+			height: 10%;
+			width: 100%;
+			display: block;
+		}
+
+		.left-header{
+			position: relative;
+			border-bottom: 2px solid black; 
+			width: 10%; display: inline-block; float: left;
+		}
+
+		.left-header div{
+			position: absolute;
+			top: 25%;
+			height: 50%;
+			width: 100%;
+		}
 	</style>
 </head>
 <body>
-<h1>Home Affordability Graph</h1>
-<div id='container'>
+<div class='outer-container'>
+	<h1>Home Affordability Graph</h1>
+	<div id='container'>
 
+	</div>
 </div>
-
 <script type='text/javascript' src='http://code.jquery.com/jquery-1.11.3.min.js'></script>
 
 
@@ -39,26 +92,26 @@
 
 	// Header Row
 	html = "";
-	html += "<div id='header'><div style='width: 10%; display: inline-block; font-weight: bold; font-size: 0.8em;'>Home Price (X)<br />Household Income(Y)</div><div style='width: 90%; display: inline-block;'>";
+	html += "<div id='header'><div style='width: 10%; display: inline-block; font-weight: bold; font-size: 0.8em; padding-left: 3px;'>Home Price (X)<br />Household Income(Y)</div><div style='width: 90%; display: inline-block;'>";
 	for(index in home_for_sale_stats){
 		row = home_for_sale_stats[index];
 		width = parseFloat(row[3] * 100);
 
-		html += "<div style='overflow: hidden; text-align: center; box-sizing: border-box; padding: 5px; border-right: 2px solid black; display: inline-block; width: " + width + "%;'>$" + row[0] + " - <br />" + row[1] + "<br />("+parseFloat(row[3]*100).toFixed(0)+"%)</div>";
+		html += "<div style='overflow: hidden; text-align: center; box-sizing: border-box; padding: 5px; border-right: 2px solid black; display: inline-block; width: " + width + "%;'>$" + row[0] + " - <br />" + row[1] + "<br /><b>("+parseFloat(row[3]*100).toFixed(0)+"%)</b></div>";
 	}
 	html += "</div></div>";
 
 	for(index in total_household_income_stats.reverse() ){
 		row = total_household_income_stats[index];
 		height = parseFloat(row[3]);
-		height *= 100;
+		height *= 70; // scaled down to fit on screen better
 
 		width = parseFloat(row[4]);
 
-		html += "<div><div style='border-bottom: 1px solid black; width: 10%; display: inline-block; float: left; height: " + height + "%;'><br />$" + row[1] + " - <br />" + row[0] + "<br />(" + parseFloat(row[3] * 100).toFixed(0) + "%)</div>";
+		html += "<div><div class='left-header' style='height: " + height + "%;'><div><br />$" + row[1] + " - <br />" + row[0] + "<br /><b>(" + parseFloat(row[3] * 100).toFixed(0) + "%)</b></div></div>";
 
 		html += "<div style='width: 90%; height: " + height + "%; background: #e96656; display: inline-block;'>";
-			html += "<div style='width: " + width + "%; background: #069059; height: 100%; color: white;'>" + width + "%</div>";
+			html += "<div class='green-bar' style='width: " + width + "%; background: #069059; height: 100%; color: white;'><span>" + width + "%</span></div>";
 		html += "</div></div>";
 
 	}
