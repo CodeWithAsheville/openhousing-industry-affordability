@@ -14,7 +14,6 @@
 		}
 
 		body{
-			padding-top: 50px;
 			text-align: center;
 		}
 
@@ -30,14 +29,18 @@
 		}
 
 		h1{
-			margin-top: 30px;
+			margin-top: 20px;
 			font-size: 3.2em;
+			background: rgba(0,0,0,0.8);
+			padding: 40px;
+			color: white;
+			display: inline-block;
 
 		}
 		#container{
 			width: 90%;
 /*			height: 75%;
-*/			margin: 50px auto;
+*/			margin: 0px auto;
 			background: rgba(255,255,255,0.8);
 		}
 
@@ -79,7 +82,7 @@
 </head>
 <body>
 <div class='outer-container'>
-	<h1>Home Affordability Graph</h1>
+	<h1>Tight Squeeze: Incomes vs Home Prices in Asheville</h1>
 	<div id='container'>
 
 	</div>
@@ -89,15 +92,21 @@
 
 <script type='text/javascript' src='home_affordability.js'></script>
 <script type='text/javascript'>
+	function processRowText(input){
+		if(input > 1000){
+			input = (input / 1000).toFixed(0) + "K";
+		}
+		return input;
+	}
 
 	// Header Row
 	html = "";
-	html += "<div id='header'><div style='width: 10%; display: inline-block; font-weight: bold; font-size: 0.8em; padding-left: 3px;'>Home Price (X)<br />Household Income(Y)</div><div style='width: 90%; display: inline-block;'>";
+	html += "<div><h2 style='padding-top: 10px'>Home Prices (X)</h2></div><div id='header'><div style='width: 10%; display: inline-block; font-weight: bold; font-size: 0.8em; padding-left: 3px; text-align: center;'><h2>Household Income(Y)</h2></div><div style='width: 90%; display: inline-block;'>";
 	for(index in home_for_sale_stats){
 		row = home_for_sale_stats[index];
 		width = parseFloat(row[3] * 100);
 
-		html += "<div style='overflow: hidden; text-align: center; box-sizing: border-box; padding: 5px; border-right: 2px solid black; display: inline-block; width: " + width + "%;'>$" + row[0] + " - <br />" + row[1] + "<br /><b>("+parseFloat(row[3]*100).toFixed(0)+"%)</b></div>";
+		html += "<div style='overflow: hidden; text-align: center; box-sizing: border-box; padding: 5px; border-left: 2px solid black; display: inline-block; width: " + width + "%;'>$" + processRowText(row[0]) + " - " + processRowText(row[1]) + "<br /><b>("+parseFloat(row[3]*100).toFixed(0)+"%)</b></div>";
 	}
 	html += "</div></div>";
 
@@ -108,11 +117,11 @@
 
 		width = parseFloat(row[4]);
 
-		html += "<div><div class='left-header' style='height: " + height + "%;'><div><br />$" + row[1] + " - <br />" + row[0] + "<br /><b>(" + parseFloat(row[3] * 100).toFixed(0) + "%)</b></div></div>";
+		html += "<div><div class='left-header' style='height: " + height + "%;'><div>$" + processRowText(row[1]) + " - " + processRowText(row[0]) + " / yr <br /><b>(" + parseFloat(row[3] * 100).toFixed(0) + "%)</b></div></div>";
 
-		html += "<div style='width: 90%; height: " + height + "%; background: #e96656; display: inline-block;'>";
-			html += "<div class='green-bar' style='width: " + width + "%; background: #069059; height: 100%; color: white;'><span>" + width + "%</span></div>";
-		html += "</div></div>";
+		html += "<div style='width: 90%; height: " + height + "%; background: #e96656; display: inline-block;'><a href='#' title='For households earning between " + processRowText(row[0]) + " and " + processRowText(row[1]) + ", " + parseFloat(width).toFixed(0) + "% of homes are affordable.'>";
+			html += "<div class='green-bar' style='width: " + width + "%; background: #069059; height: 100%; color: white;'><span>" + width + "% of homes affordable</span></div>";
+		html += "</div></a></div>";
 
 	}
 

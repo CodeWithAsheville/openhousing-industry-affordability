@@ -38,6 +38,8 @@ for(index in total_household_income_stats){
 	}
 }
 
+
+
 var affordable_home_income_multiplier = 3;
 function get_income_group_affordable_width(income){
 	max_affordable = income * affordable_home_income_multiplier;
